@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Detail</title>
+</head>
+<body>
+    <h1>Company Detail</h1>
+    <p><strong>ID:</strong> {{ company[0] }}</p>
+    <p><strong>Name:</strong> {{ company[1] }}</p>
+    <p><strong>Description:</strong> {{ company[2] }}</p>
+    <p><strong>Address:</strong> {{ company[3] }}</p>
+   <a href="/download/{{ company[0] }}">Download PDF</a>
+    <a href="/companies">Back to Company List</a>
+</body>
+</html>

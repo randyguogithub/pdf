@@ -9,7 +9,7 @@ from reportlab.pdfbase import pdfmetrics
 
 def generate_energy_report():
     # 创建PDF对象
-    pdf = canvas.Canvas("energy_report.pdf", pagesize=A4)
+    pdf = canvas.Canvas("static/energy_report.pdf", pagesize=A4)
     width, height = A4
 
     # 标题样式

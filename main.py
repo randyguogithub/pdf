@@ -66,6 +66,16 @@ async def list_companies(request: Request):
     conn.close()
     return templates.TemplateResponse("companies.html", {"request": request, "companies": companies})
 
+@app.get("/company/{company_id}", response_class=HTMLResponse)
+async def company_detail(request: Request, company_id: int):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM companies WHERE id = ?", (company_id,))
+    company = cursor.fetchone()
+    conn.close()
+    if company is None:
+        return templates.TemplateResponse("companies.html", {"request": request, "message": "Company not found!"})
+    return templates.TemplateResponse("detail.html", {"request": request, "company": company})
 
 def generate_energy_report(filename="energy_report.pdf", company=[]):
     # 创建PDF对象
