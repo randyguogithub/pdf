@@ -5,7 +5,7 @@ steps:
     args:
       - "-c"
       - |
-        gcloud compute ssh randyzwguo@energy.randyguo.top --command "cd /home/randyzwguo/pdf && git pull && systemctl restart energy'"
+        gcloud compute ssh energy-audit-system --internal-ip --region=asia-east2-c --command "cd /home/randyzwguo/pdf && git pull && systemctl restart energy'"
 
 # Optional: Add additional steps here if needed, such as deploying the application or running commands in the VM.
 
