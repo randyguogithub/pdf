@@ -71,11 +71,23 @@ async def download_pdf(company_id: int):
 
     # Generate PDF content
     pdf_content = f"""
-    <h1>Company Information</h1>
-    <p><strong>Name:</strong> {company[1]}</p>
-    <p><strong>Description:</strong> {company[2]}</p>
-    <p><strong>Address:</strong> {company[3]}</p>
+    <h1>您输入的公司信息如下：</h1>
+    <p><strong>公司名称:</strong> {company[1]}</p>
+    <p><strong>公司简介:</strong> {company[2]}</p>
+    <p><strong>公司地址:</strong> {company[3]}</p>
     """
+    # Ensure Chinese characters are supported by specifying a font that supports them
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0mm',
+        'encoding': "UTF-8",
+        'no-outline': None,
+        'custom-header': [('Accept-Encoding', 'gzip')],
+        'quiet': '',
+        'enable-local-file-access': '',
+        'user-style-sheet': 'static/styles.css'  # Optional: Add a CSS file for styling
+    }
+    # Ensure the font in your CSS file supports Chinese characters (e.g., Noto Sans CJK or SimSun)
 
     # Save PDF to a file
     pdf_file = f"static/company_{company_id}.pdf"

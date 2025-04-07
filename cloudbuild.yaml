@@ -1,0 +1,12 @@
+steps:
+  # Step 1: SSH into the VM and change the working directory
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        gcloud compute ssh randyzwguo@energy.randyguo.top --command "cd /home/randyzwguo/pdf && git pull && systemctl restart energy'"
+
+# Optional: Add additional steps here if needed, such as deploying the application or running commands in the VM.
+
+timeout: "1200s"  # Set a timeout for the build process (20 minutes)
