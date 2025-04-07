@@ -1,0 +1,6 @@
+fastapi 
+uvicorn
+jinja2
+sqlite4
+pdfkit
+python-multipart
