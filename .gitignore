@@ -9,5 +9,5 @@ venv/
 *.egg-info
 *.egg
 *.log
-fonts
 energy_report.pdf
+fonts/.DS_Store
