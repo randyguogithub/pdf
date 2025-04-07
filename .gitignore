@@ -11,3 +11,4 @@ venv/
 *.log
 energy_report.pdf
 fonts/.DS_Store
+static/*.pdf

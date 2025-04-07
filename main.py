@@ -69,7 +69,7 @@ async def list_companies(request: Request):
 
 def generate_energy_report(filename="energy_report.pdf", company=[]):
     # 创建PDF对象
-    pdf = canvas.Canvas("static/{}.pdf".format(filename), pagesize=A4)
+    pdf = canvas.Canvas("static/{}".format(filename), pagesize=A4)
     width, height = A4
 
     # 标题样式
