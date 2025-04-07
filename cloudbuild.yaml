@@ -5,7 +5,7 @@ steps:
     args:
       - "-c"
       - |
-        gcloud compute ssh energy-audit-system --internal-ip --zone=asia-east2-c --project=randyguo-test-43165062 --command "sudo su && cd /home/randyzwguo/pdf && git pull && systemctl restart energy'"
+        gcloud compute ssh energy-audit-system --zone=asia-east2-c --project=randyguo-test-43165062 --command "sudo su && cd /home/randyzwguo/pdf && git pull && systemctl restart energy"
 
 timeout: "1200s"  # Set a timeout for the build process (20 minutes)
 options:
