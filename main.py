@@ -69,7 +69,7 @@ async def list_companies(request: Request):
 
 def generate_energy_report(filename="energy_report.pdf", company=[]):
     # 创建PDF对象
-    pdf = canvas.Canvas("energy_report.pdf", pagesize=A4)
+    pdf = canvas.Canvas("static/{}.pdf".format(filename), pagesize=A4)
     width, height = A4
 
     # 标题样式
@@ -97,19 +97,12 @@ async def download_pdf(company_id: int):
     cursor.execute("SELECT * FROM companies WHERE id = ?", (company_id,))
     company = cursor.fetchone()
     conn.close()
-
-    # if not company:
-    #     return {"error": "Company not found"}
-
-    # # Generate PDF content
-    # pdf_content = f"""
-    # <h1>您输入的公司信息如下：</h1>
-    # <p><strong>公司名称:</strong> {company[1]}</p>
-    # <p><strong>公司简介:</strong> {company[2]}</p>
-    # <p><strong>公司地址:</strong> {company[3]}</p>
-    # """
+    if company is None:
+        return {"error": "Company not found"}
     # 执行生成
-    generate_energy_report(filename=f"company_{company_id}.pdf", company=company)
+    pdf_file = f"static/company_{company_id}.pdf"
+    filename = f"company_{company_id}.pdf"
+    generate_energy_report(filename=filename , company=company)
 
     # Serve the PDF file
     return FileResponse(pdf_file, media_type="application/pdf", filename=f"company_{company_id}.pdf")
