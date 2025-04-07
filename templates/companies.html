@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Companies</title>
+</head>
+<body>
+    <h1>Company List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+            <tr>
+                <td>{{ company[0] }}</td>
+                <td>{{ company[1] }}</td>
+                <td>{{ company[2] }}</td>
+                <td>{{ company[3] }}</td>
+                <td><a href="/download/{{ company[0] }}">Download PDF</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

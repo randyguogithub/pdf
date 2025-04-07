@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Form</title>
+</head>
+<body>
+    <h1>Add a Company</h1>
+    <form action="/submit" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br><br>
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    {% if message %}
+    <p style="color: green;">{{ message }}</p>
+    {% endif %}
+</body>
+</html>
