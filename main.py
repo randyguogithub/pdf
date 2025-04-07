@@ -91,7 +91,6 @@ async def download_pdf(company_id: int):
 
     # Save PDF to a file
     pdf_file = f"static/company_{company_id}.pdf"
-    options = {'page-size': 'A4', 'margin-top': '0mm'}
     pdfkit.from_string(pdf_content,pdf_file , options=options)
 
     # Serve the PDF file
