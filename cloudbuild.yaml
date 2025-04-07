@@ -5,8 +5,8 @@ steps:
     args:
       - "-c"
       - |
-        gcloud compute ssh energy-audit-system --internal-ip --region=asia-east2-c --command "cd /home/randyzwguo/pdf && git pull && systemctl restart energy'"
-
+        gcloud compute ssh energy-audit-system --internal-ip --zone=asia-east2-c --project=randyguo-test-43165062 --command "cd /home/randyzwguo/pdf && git pull && systemctl restart energy'"
+# --zone=asia-east2-b --project=randyguo-test-43165062
 # Optional: Add additional steps here if needed, such as deploying the application or running commands in the VM.
 
 timeout: "1200s"  # Set a timeout for the build process (20 minutes)

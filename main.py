@@ -2,8 +2,15 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import cm
+from reportlab.platypus import Table, TableStyle
+from reportlab.lib import colors
 import sqlite3
-import pdfkit
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+
 import os
 
 app = FastAPI()
@@ -15,7 +22,7 @@ templates = Jinja2Templates(directory="templates")
 # Initialize SQLite database
 DB_NAME = "data.db"
 
-def init_db():
+def init_db_fonts():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""
@@ -28,8 +35,9 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+    pdfmetrics.registerFont(TTFont('SourceHanSans-VF', 'fonts/SourceHanSans-VF.ttf'))
 
-init_db()
+init_db_fonts()
 
 @app.get("/", response_class=HTMLResponse)
 async def form_page(request: Request):
@@ -58,6 +66,30 @@ async def list_companies(request: Request):
     conn.close()
     return templates.TemplateResponse("companies.html", {"request": request, "companies": companies})
 
+
+def generate_energy_report(filename="energy_report.pdf", company=[]):
+    # 创建PDF对象
+    pdf = canvas.Canvas("energy_report.pdf", pagesize=A4)
+    width, height = A4
+
+    # 标题样式
+    pdf.setFont("SourceHanSans-VF", 18)
+    pdf.drawCentredString(width/2, height-80, company[1])
+
+    pdf.setFont("SourceHanSans-VF", 14)
+    pdf.drawCentredString(width/2, height-120, "初始能源评审报告")
+    # 元数据
+    pdf.setFont("SourceHanSans-VF", 12)
+    pdf.drawCentredString(width/2, height-140, f"编制：能源管理团队")
+    pdf.drawCentredString(width/2, height-160, f"审核：陈海")
+    pdf.drawCentredString(width/2, height-180, f"批准：兰升")
+    pdf.drawCentredString(width/2, height-200, f"编制日期：2024年01月01日")
+    pdf.drawCentredString(width/2, height-220, f"修订日期：2024年11月21日")
+    pdf.drawString(80, height-320, company[2])
+    pdf.drawString(80, height-340, company[3])
+    pdf.save()
+
+
 @app.get("/download/{company_id}")
 async def download_pdf(company_id: int):
     conn = sqlite3.connect(DB_NAME)
@@ -66,32 +98,18 @@ async def download_pdf(company_id: int):
     company = cursor.fetchone()
     conn.close()
 
-    if not company:
-        return {"error": "Company not found"}
+    # if not company:
+    #     return {"error": "Company not found"}
 
-    # Generate PDF content
-    pdf_content = f"""
-    <h1>您输入的公司信息如下：</h1>
-    <p><strong>公司名称:</strong> {company[1]}</p>
-    <p><strong>公司简介:</strong> {company[2]}</p>
-    <p><strong>公司地址:</strong> {company[3]}</p>
-    """
-    # Ensure Chinese characters are supported by specifying a font that supports them
-    options = {
-        'page-size': 'A4',
-        'margin-top': '0mm',
-        'encoding': "UTF-8",
-        'no-outline': None,
-        'custom-header': [('Accept-Encoding', 'gzip')],
-        'quiet': '',
-        'enable-local-file-access': '',
-        'user-style-sheet': 'static/styles.css'  # Optional: Add a CSS file for styling
-    }
-    # Ensure the font in your CSS file supports Chinese characters (e.g., Noto Sans CJK or SimSun)
-
-    # Save PDF to a file
-    pdf_file = f"static/company_{company_id}.pdf"
-    pdfkit.from_string(pdf_content,pdf_file , options=options)
+    # # Generate PDF content
+    # pdf_content = f"""
+    # <h1>您输入的公司信息如下：</h1>
+    # <p><strong>公司名称:</strong> {company[1]}</p>
+    # <p><strong>公司简介:</strong> {company[2]}</p>
+    # <p><strong>公司地址:</strong> {company[3]}</p>
+    # """
+    # 执行生成
+    generate_energy_report(filename=f"company_{company_id}.pdf", company=company)
 
     # Serve the PDF file
     return FileResponse(pdf_file, media_type="application/pdf", filename=f"company_{company_id}.pdf")
