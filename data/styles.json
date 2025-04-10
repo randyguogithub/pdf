@@ -1,0 +1,30 @@
+{
+    "MainTitle": {
+        "fontName": "Black-CN",
+        "fontSize": 28,
+        "leading": 20,
+        "alignment": 1,
+        "textColor": "black"
+    },
+    "SubTitle": {
+        "fontName": "Black-CN",
+        "fontSize": 26,
+        "textColor": "black",
+        "spaceAfter": 6,
+        "underlineWidth": 1
+    },
+    "section1": {
+        "fontName": "Black-CN",
+        "fontSize": 14,
+        "textColor": "black",
+        "leading": 14,
+        "spaceAfter": 18
+    },
+    "section2": {
+        "fontName": "Black-CN",
+        "fontSize": 18,
+        "textColor": "black",
+        "leading": 14,
+        "spaceAfter": 18
+    }
+}

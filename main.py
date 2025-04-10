@@ -20,7 +20,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 # Initialize SQLite database
-DB_NAME = "data.db"
+DB_NAME = "data/data.db"
 
 def init_db_fonts():
     conn = sqlite3.connect(DB_NAME)

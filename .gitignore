@@ -14,3 +14,5 @@ fonts/.DS_Store
 static/*.pdf
 static/*.docx
 static/*.doc
+.DS_Store
+tests
