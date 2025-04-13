@@ -10,6 +10,7 @@
         "fontName": "Black-CN",
         "fontSize": 26,
         "textColor": "black",
+        "alignment": 1,
         "spaceAfter": 6,
         "underlineWidth": 1
     },
@@ -18,11 +19,35 @@
         "fontSize": 14,
         "textColor": "black",
         "leading": 14,
+        "alignment": 1,
         "spaceAfter": 18
     },
     "section2": {
         "fontName": "Black-CN",
         "fontSize": 18,
+        "textColor": "black",
+        "alignment": 1,
+        "leading": 14,
+        "spaceAfter": 18
+    },
+    "agendaheader": {
+        "fontName": "Black-CN",
+        "fontSize": 16,
+        "textColor": "black",
+        "alignment": 1,
+        "leading": 14,
+        "spaceAfter": 18
+    },
+    "agenda": {
+        "fontName": "Black-CN",
+        "fontSize": 14,
+        "textColor": "black",
+        "leading": 14,
+        "spaceAfter": 18
+    },
+    "agendasub": {
+        "fontName": "Black-CN",
+        "fontSize": 13,
         "textColor": "black",
         "leading": 14,
         "spaceAfter": 18

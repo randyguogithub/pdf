@@ -16,3 +16,4 @@ static/*.docx
 static/*.doc
 .DS_Store
 tests
+.DS_Store

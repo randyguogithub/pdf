@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> 公司 - AISO智慧能效评估系统</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- <h1>Company List</h1> -->
+    <div class="header">
+        <!-- <img src="/static/logo.jpg" alt="Company Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;"> -->
+        <!-- <h1> page.main_title </h1> -->
+        <h1>公司列表</h1>
+
+    </div>
+    <div class="container">
+        {% if companies %}
+        <!-- Display the company list if companies are found -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>公司名称</th>
+                    <th>公司地址</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                <tr>
+                    <td>{{ company[0] }}</td>
+                    <td>{{ company[1] }}</td>
+                    <td>{{ company[2] }}</td>
+                    <td>
+                        <a href="/audit&commanyid={{ company[0] }}">查看信息</a> | 
+                        <a href="/download&commanyid={{ company[0] }}">查看报表</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <!-- Show the form if no companies are found -->
+        <div><p>未找到公司信息，请先添加公司信息：</p><div>
+        <form action="/company" method="POST">
+            <div class="form-group">
+                <label for="name">公司名称:</label>
+                <input type="text" id="name" name="name" placeholder="请输入公司名称" required>
+            </div>
+            <div class="form-group">
+                <label for="address">公司地址:</label>
+                <input type="text" id="address" name="address" placeholder="请输入公司地址" required>
+            </div>
+            <button type="company" class="form-button">添加公司</button>
+        </form>
+        {% endif %}
+</div>
+</body>
+</html>
