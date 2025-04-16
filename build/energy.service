@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory=/home/randyzwguo/pdf
 Enviroment=PATH=/home/randyzwguo/pdf/venv/bin
-ExecStart=/home/randyzwguo/pdf/venv/bin/python main.py --host=127.0.0.1 --port=8000 --reload
+ExecStart=/home/randyzwguo/pdf/venv/bin/python main.py --host=127.0.0.1 --port=8000
 Restart=always
 
 [Install]
