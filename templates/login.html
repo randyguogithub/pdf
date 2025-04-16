@@ -98,10 +98,10 @@
 <body>
     <div class="form-container">
         <h1>登录 - AISO智慧能效评估系统</h1>
-        <form action="/login" method="POST">
+        <form id="login-form">
             <div class="form-group">
-                <label for="username">用户名</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <label for="email">用户名</label>
+                <input type="username" id="username" name="username" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label for="password">密码</label>
@@ -109,17 +109,34 @@
             </div>
             <button type="submit" class="form-button">登录</button>
         </form>
-        <div class="message" id="message">
-            <!-- This will display messages dynamically -->
-            {% if error %}
-                {{ error }}
-            {% elif success %}
-                <span class="success">{{ success }}</span>
-            {% endif %}
-        </div>
         <div class="form-footer">
             还没有一个账号? <a href="/register">注册</a> | 忘记登录密码? <a href="/register">重置密码</a>
         </div>
     </div>
+    <script>
+        // Handle form submission
+        document.getElementById("login-form").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Collect form data
+            const formData = new FormData(document.getElementById("login-form"));
+
+            // Send data as application/x-www-form-urlencoded
+            const response = await fetch("/auth/jwt/login", {
+                method: "POST",
+                body: new URLSearchParams(formData), // Convert FormData to URLSearchParams
+            });
+
+            console.log("response", response);
+            // Handle the response
+            if (response.ok) {
+                alert("登录成功!");
+                window.location.href = "/audit";
+            } else {
+                const errorData = await response.json();
+                alert("登录失败: " + (errorData.detail || "未知错误"));
+            }
+        });
+    </script>
 </body>
 </html>
