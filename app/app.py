@@ -6,6 +6,8 @@ from app.db import User, create_db_and_tables
 from app.schemas import UserCreate, UserRead, UserUpdate
 from app.users import auth_backend, current_active_user, fastapi_users
 from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Not needed if you setup a migration system like Alembic
@@ -15,7 +17,10 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 # Include routes from pages.py
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Get the current directory of the app.py file
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+app.mount("/static", StaticFiles(directory="{}/static".format(BASE_DIR)), name="static")
 app.include_router(pages_router, tags=["pages"])
 
 
