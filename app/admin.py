@@ -20,4 +20,4 @@ async def admin_page(request: Request, session: AsyncSession = Depends(get_async
     result = await session.execute(select(User))
     users = result.scalars().all()
     print("users:", users)
-    return templates.TemplateResponse("admin.html", {"request": request, "users": users})
+    return templates.TemplateResponse("admin_user.html", {"request": request, "users": users})

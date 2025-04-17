@@ -10,9 +10,12 @@ from fastapi_users.password import PasswordHelper
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
+from pydantic import BaseModel
 DATABASE_URL = "sqlite+aiosqlite:///./data/aiso.db"
 
-
+class CompanyCreate(BaseModel):
+    name: str
+    address: str
 class Base(DeclarativeBase):
     pass
 class Company(Base):
@@ -20,7 +23,7 @@ class Company(Base):
     id =Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String)
     address = Column(String)
-    created_by = Column(String)
+    created_by = Column(String, default="admin")
     auditor = Column(String, default="admin")
     status = Column(String, default="draft")
     created_at = Column(DateTime, server_default=func.now())

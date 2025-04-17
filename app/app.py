@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
 
 from app.pages import pages_router
+from app.company import company_router
 from app.db import User, create_db_and_tables
 from app.admin import admin_router
 from app.schemas import UserCreate, UserRead, UserUpdate
@@ -24,6 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 app.mount("/static", StaticFiles(directory="{}/static".format(BASE_DIR)), name="static")
 app.include_router(pages_router, tags=["pages"])
 app.include_router(admin_router)
+app.include_router(company_router)
 app.include_router(
     fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
 )

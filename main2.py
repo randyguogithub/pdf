@@ -113,7 +113,7 @@ async def list_companies(request: Request):
         return RedirectResponse(url="/login")
     sql = "SELECT * FROM users"
     users = db.run_sql(sql)
-    return templates.TemplateResponse("admin.html", {"request": request, "users": users})
+    return templates.TemplateResponse("admin_user.html", {"request": request, "users": users})
 
 @app.get("/company", response_class=HTMLResponse)
 async def list_companies(request: Request):
