@@ -45,7 +45,9 @@ body {
     text-decoration: none;
     font-size: 14px;
 }
-
+.nav-link.active {
+    color: red; /* Make the font color blank (transparent) */
+}
 /* Main Content */
 .main-content {
     flex: 1;

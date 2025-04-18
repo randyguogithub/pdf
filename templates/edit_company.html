@@ -52,9 +52,22 @@
             // Function to load a markdown file and render it
             function loadMarkdown(id) {
                 const company = JSON.parse(`{{ company | tojson | safe }}`);
+                const contentDiv = document.getElementById('markdown-content');
                 const htmlContent = marked.parse(company[id]);
-                // Insert the HTML into the markdown-content div
-                document.getElementById('markdown-content').innerHTML = htmlContent;
+
+                // Create an input field to allow editing
+                contentDiv.innerHTML = `
+                    <textarea id="markdown-editor" style="width: 100%; height: 300px;">${company[id]}</textarea>
+                    <button id="save-button">Save</button>
+                `;
+
+                // Add event listener to save button
+                document.getElementById('save-button').addEventListener('click', () => {
+                    const updatedContent = document.getElementById('markdown-editor').value;
+                    company[id] = updatedContent; // Update the company data
+                    contentDiv.innerHTML = marked.parse(updatedContent); // Render updated content
+                    alert('Content updated successfully!');
+                });
             }
         
             // Add event listeners to nav-links

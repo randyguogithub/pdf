@@ -15,6 +15,31 @@ company_router = APIRouter()
 async def list_companies(session: AsyncSession = Depends(get_async_session)):
     result = await session.execute(select(Company))
     return result.scalars().all()
+@company_router.get("/company/edit/{company_id}", tags=["company"])
+async def get_company(company_id: str,  # Add company_id as a parameter
+    request: Request,
+    session: AsyncSession = Depends(get_async_session)):
+    # print("company_id:", company_id)
+    try:
+        # Convert company_id to a UUID object
+        company_uuid = uuid.UUID(company_id)
+    except ValueError:
+        # Raise an error if the company_id is not a valid UUID
+        raise HTTPException(status_code=400, detail="Invalid company ID format")
+
+    result = await session.execute(select(Company).where(Company.id == company_uuid))
+    company = result.scalars().first()
+    if result is None:
+        companys= {"message": "Company not found"}
+    # print("company:", company)    
+    # return company
+    company_dict = {
+        "id": str(company.id),
+        "name": company.name,
+        "address": company.address,
+        "info": company.info,
+    }    
+    return templates.TemplateResponse("edit_company.html", {"request": request,"company": company_dict})
 
 @company_router.get("/company/detail/{company_id}", tags=["company"])
 async def get_company(company_id: str,  # Add company_id as a parameter
