@@ -16,6 +16,11 @@ DATABASE_URL = "sqlite+aiosqlite:///./data/aiso.db"
 class CompanyCreate(BaseModel):
     name: str
     address: str
+
+class CompanyInfo(BaseModel):
+    id: str
+    info: str
+
 class Base(DeclarativeBase):
     pass
 class Company(Base):
@@ -23,6 +28,7 @@ class Company(Base):
     id =Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String)
     address = Column(String)
+    info = Column(String, default="# 公司概况")
     created_by = Column(String, default="admin")
     auditor = Column(String, default="admin")
     status = Column(String, default="draft")

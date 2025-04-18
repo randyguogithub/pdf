@@ -1,0 +1,79 @@
+<!-- templates/docs.html -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AISO - 智慧能效评估系统</title>
+        <link rel="icon" type="image/png" href="/static/logo.jpg">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+<body>
+    <div class="header">
+        <h1>company</h1>
+        <div class="user-info">
+            <span id="user-name">Welcome, {{ username }}</span>
+            <button id="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <script>
+        // Example function to handle logout
+        function logout() {
+            // Perform logout logic here
+            alert('You have been logged out.');
+            // Redirect to login page or perform other actions
+            // document.cookie = "user_logged_in=False;";
+
+            window.location.href = '/login';
+        }
+    </script>
+
+    <div class="container">
+         <!-- Left Navigation -->
+         <nav class="nav-column">
+            <ul class="nav-list">
+                <li class="nav-item"><a id="info" href="#info" class="nav-link">公司简介</a></li>
+                <li class="nav-item"><a id="address" href="#address" class="nav-link">能源评审的目的、范围及边界、统计期</a></li>
+                <li class="nav-item"><a id="info" href="#" class="nav-link">能源评审的参加人员及职责</a></li>
+                <li class="nav-item"><a id="info" href="#" class="nav-link">能源评审的方法及依据</a></li>
+                <li class="nav-item"><a id="info" href="#" class="nav-link">公司能源管理现状及分析</a></li>
+                <li class="nav-item"><a id="info" href="#" class="nav-link">能源法律法规合规性评价</a></li>
+                <li class="nav-item"><a id="info" href="#" class="nav-link">能源评审</a></li>
+                <li class="nav-item"><a id="info" href="#" class="nav-link">附件</a></li>
+            </ul>
+        </nav>
+        <div class="container">
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="markdown-body" id="markdown-content"></div>
+            </main>
+        </div>
+
+        <script>
+            // Function to load a markdown file and render it
+            function loadMarkdown(id) {
+                const company = JSON.parse(`{{ company | tojson | safe }}`);
+                const htmlContent = marked.parse(company[id]);
+                // Insert the HTML into the markdown-content div
+                document.getElementById('markdown-content').innerHTML = htmlContent;
+            }
+        
+            // Add event listeners to nav-links
+            document.addEventListener('DOMContentLoaded', () => {
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', event => {
+                        event.preventDefault(); // Prevent default link behavior
+                        const id = link.getAttribute('id'); // Get the href attribute
+                        console.log("Clicked link ID:", id);
+                        loadMarkdown(id); // Load the corresponding markdown file
+                    });
+                });
+        
+                // Load the default markdown file on page load
+                loadMarkdown('info');
+            });
+        </script>
+
+    </div>
+</body>
+</html>
