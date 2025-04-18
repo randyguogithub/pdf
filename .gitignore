@@ -12,7 +12,8 @@ venv/
 energy_report.pdf
 fonts/.DS_Store
 static/*.pdf
-
+static/*.md
+static/*.json
 static/*.docx
 static/*.doc
 .DS_Store
