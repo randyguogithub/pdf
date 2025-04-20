@@ -19,7 +19,14 @@ class CompanyCreate(BaseModel):
 
 class CompanyInfo(BaseModel):
     id: str
-    info: str
+    info: str | None = None
+    scope: str | None = None
+    status: str | None = None
+    purpose: str | None = None
+    general: str | None = None
+    org: str | None = None
+    principles: str | None = None
+    product: str | None = None
 
 class Base(DeclarativeBase):
     pass
@@ -28,6 +35,12 @@ class Company(Base):
     id =Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String)
     address = Column(String)
+    scope = Column(String)
+    general = Column(String)
+    org = Column(String)
+    principles = Column(String)
+    product = Column(String)
+    purpose = Column(String)
     info = Column(String, default="# 公司概况")
     created_by = Column(String, default="admin")
     auditor = Column(String, default="admin")

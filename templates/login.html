@@ -33,7 +33,7 @@
             const formData = new FormData(document.getElementById("login-form"));
 
             // Send data as application/x-www-form-urlencoded
-            const response = await fetch("/auth/jwt/login", {
+            const response = await fetch("/api/v1/login", {
                 method: "POST",
                 body: new URLSearchParams(formData), // Convert FormData to URLSearchParams
             });
@@ -45,7 +45,7 @@
                 const token = data.access_token; // Extract the access token
                 localStorage.setItem("authToken", token); // Store the token in localStorage
                 // alert("登录成功!");
-                window.location.href = "/audit";
+                window.location.href = "/company";
             } else {
                 const errorData = await response.json();
                 alert("登录失败: " + (errorData.detail || "未知错误"));

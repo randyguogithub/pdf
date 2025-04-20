@@ -1,200 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-    <title>AISO - 智慧能效评估系统</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AISO 登录</title>
     <style>
-        :root {
-            --link-blue: #0645AD;
-            --header-border: #EAECF0;
-            --toc-bg: #F8F9FA;
-            --text-primary: #202122;
-            --text-secondary: #54595D;
-        }
-
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            color: var(--text-primary);
-            background: white;
-        }
-
-        .container {
+            margin: 0;
+            padding: 40px 0; /* 上下增加留白 */
+            min-height: 100vh;
             display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            justify-content: center;
+            background-color: #f0f0f0;
         }
 
-        /* Left Navigation */
-        .nav-column {
-            width: 200px;
-            padding-right: 20px;
-            position: fixed;
+        .login-container {
+            width: 600px;
+            padding: 60px;  /* 增加容器内边距 */
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: auto;  /* 保持垂直居中 */
         }
 
-        .nav-list {
-            list-style: none;
+        h1 {
+            font-size: 24px;
+            margin: 0 0 40px 0;  /* 增加标题下方间距 */
+            color: #333;
+            text-align: center;
         }
 
-        .nav-item {
+        .input-group {
+            margin-bottom: 15px;  /* 三行布局关键间距 */
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #666;
             margin-bottom: 12px;
         }
 
-        .nav-link {
-            color: var(--link-blue);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin: 0 20px;
-            padding-left: 220px;
-        }
-
-        .faq-section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            color: var(--text-secondary);
-            font-size: 18px;
-            margin: 25px 0 15px;
-        }
-
-        .faq-question {
-            font-weight: 600;
-            margin: 20px 0;
+        input {
+            width: 100%;
+            height: 48px;  /* 输入框高度 */
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
 
-        /* Right TOC */
-        .toc-column {
-            width: 240px;
-            position: fixed;
-            right: 20px;
-            background: var(--toc-bg);
-            padding: 15px;
-            border-left: 1px solid var(--header-border);
+        input:focus {
+            border-color: #007bff;
+            outline: none;
         }
 
-        .toc-title {
+        button {
+            width: 100%;
+            height: 48px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
             font-size: 16px;
-            margin-bottom: 10px;
+            cursor: pointer;
+            transition: opacity 0.3s;
         }
 
-        .toc-list {
-            list-style: none;
+        button:hover {
+            opacity: 0.9;
         }
 
-        .toc-item {
-            margin: 12px 0;
+        .links {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            line-height: 1.8;
         }
 
-        .toc-item a {
-            color: var(--link-blue);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        /* Header */
-        .header {
-            border-bottom: 1px solid var(--header-border);
-            padding: 10px 0;
-            margin-bottom: 20px;
-        }
-
-        .search-box {
-            float: right;
-            padding: 8px 12px;
-            border: 1px solid #A2A9B1;
-            border-radius: 2px;
-            width: 200px;
+        .links a {
+            color: #007bff;
+            margin: 0 8px;
         }
     </style>
 </head>
 <body>
-    <div class="header container">
-        <h1>AISO - 智慧能效评估系统</h1>
-        <!-- <input type="text" class="search-box" placeholder="Search"> -->
-    </div>
-
-    <div class="container">
-        <!-- Left Navigation -->
-        <nav class="nav-column">
-            <ul class="nav-list">
-                <li class="nav-item"><a href="/introduction" class="nav-link">公司简介</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">能源评审的目的、范围及边界、统计期</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">能源评审的参加人员及职责</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">能源评审的方法及依据</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">公司能源管理现状及分析</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">能源法律法规合规性评价</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">能源评审</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">附件</a></li>
-            </ul>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <h2>Developer FAQs</h2>
-            
-            <div class="faq-section">
-                <h3 class="section-title">1. General information and availability</h3>
-                
-                <div class="faq-question">1.1 What is ReportLab?</div>
-                <p>ReportLab Inc. is a software company developing open-source and commercial products for generating PDF files. It is a collection of open source Python language modules organized and supported by ReportLab. The modules are primarily concerned with automating methods for generating Portable Document Format (PDF) files, but there is also a cross-platform vector graphics library able to generate bitmap and vector charts and drawings.</p>
-
-                <div class="faq-question">1.2 How do I get the ReportLab Toolkit?</div>
-                <p>If you have not already done so, you will need to install the Python language from www.python.org. If you want to include bitmap images, install the Python Imaging Library. Thereafter, you need the latest stable version of the ReportLab package from our downloads page.</p>
-
-                <div class="faq-question">1.3 Licensing</div>
-                <div class="faq-question">1.3.1 Licensing for contributions</div>
-                
-                <div class="faq-question">1.4 System requirements</div>
-                <div class="faq-question">1.5 Platforms (*nix, Windows, OSX)</div>
-                <div class="faq-question">1.6 Installation</div>
-                
-                <div class="faq-question">1.7 Is there a mailing list?</div>
-                <p>Answers to many common questions about ReportLab open source can be found on the reportlab-users Google Group. Please send queries, suggested FAQs or requests to the users list by subscribing or (if you are not subscribed) to <a href="mailto:info@reportlab.com">info@reportlab.com</a></p>
-
-                <div class="faq-question">1.8 How stable is it?</div>
-                
-                <div class="faq-question">1.9 Where is the documentation? How do I learn my way around it?</div>
-                
-                <div class="faq-question">1.10 What is the difference between the free and commercial version</div>
-                
-                <div class="faq-question">1.11 Does ReportLab toolkit work on Java platform?</div>
-            </div>
-
-            <h3 class="section-title">2. Programming with ReportLab</h3>
-            <div class="faq-question">2.1 General</div>
-            <p>Dutan befor 1b now 4b: a collocation</p>
-        </main>
-
-        <!-- Right TOC -->
-        <!-- <aside class="toc-column">
-            <h4 class="toc-title">Table of contents</h4>
-            <ul class="toc-list">
-                <li class="toc-item"><a href="#1.1">1.1 What is ReportLab?</a></li>
-                <li class="toc-item"><a href="#1.2">1.2 Getting the Toolkit</a></li>
-                <li class="toc-item"><a href="#1.3">1.3 Licensing</a></li>
-                <li class="toc-item"><a href="#1.4">1.4 System Requirements</a></li>
-                <li class="toc-item"><a href="#1.5">1.5 Platforms</a></li>
-                <li class="toc-item"><a href="#1.6">1.6 Installation</a></li>
-                <li class="toc-item"><a href="#1.7">1.7 Mailing List</a></li>
-                <li class="toc-item"><a href="#1.8">1.8 Stability</a></li>
-                <li class="toc-item"><a href="#1.9">1.9 Documentation</a></li>
-                <li class="toc-item"><a href="#1.10">1.10 Free vs Commercial</a></li>
-                <li class="toc-item"><a href="#1.11">1.11 Java Support</a></li>
-                <li class="toc-item"><a href="#2.1">2.1 General Programming</a></li>
-            </ul>
-        </aside> -->
+    <div class="login-container">
+        <h1>登录 - AISO智慧能效评估系统</h1>
+        
+        <div class="input-group">
+            <label for="general">公司主要概况</label>
+            <input type="text" id="general" name="general" placeholder="科技股份有限公司是一家集科研、生产、营销和服务为一体的高新科技企业." required>
+        </div>
+        <div class="input-group">
+            <label for="product">公司主要产品</label>
+            <input type="text" id="product" name="product" placeholder="输入企业注册地址" required>
+        </div>
+        <div class="input-group">
+            <label for="org">能源管理体系组织架构</label>
+            <input type="file" id="org" name="org" accept=".pdf,.docx" placeholder="能源管理体系组织架构">
+        </div>
+        <div class="input-group">
+            <label for="principles">能源方针</label>
+            <input type="text" id="principles" name="principles" placeholder="节能守法、清洁生产，节能降耗、持续改进。">
+        </div>
+        <button type="submit" class="form-button-big">下一步</button>
     </div>
 </body>
 </html>

@@ -17,9 +17,9 @@ async def login_page(request: Request):
 @pages_router.get("/register",response_class=HTMLResponse)
 async def form_page(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
-# @pages_router.get("/admin",response_class=HTMLResponse)
-# async def form_page(request: Request):
-#     return templates.TemplateResponse("admin_user.html", {"request": request})
+@pages_router.get("/index",response_class=HTMLResponse)
+async def form_page(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
       
 @pages_router.get("/audit",response_class=HTMLResponse)
 async def form_page(request: Request):

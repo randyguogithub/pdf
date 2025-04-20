@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <title>添加评估能源企业信息 - AISO智慧能效评估系统</title>
+        <link rel="stylesheet" href="/static/css/inputstyle.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="input-container">
+            <h1>添加评估能源企业信息</h1>
+            <form id="register-form">
+                <!-- Hidden input for company ID -->
+                <input
+                    type="hidden"
+                    id="id"
+                    name="id"
+                    value="550e8400-e29b-41d4-a716-446655440000">
+
+                <div class="input-group">
+                    <label for="general">公司主要概况</label>
+                    <textarea
+                        class="multi-line-input"
+                        rows="3"
+                        id="general"
+                        name="general"
+                        placeholder="..科技股份有限公司是一家集科研、生产、营销和服务为一体的高新科技企业...."
+                        maxlength="500"
+                        oninput="this.style.height = 'auto';this.style.height = this.scrollHeight + 'px'"></textarea>
+                    <!-- <input type="text" id="general" name="general"
+                    placeholder="科技股份有限公司是一家集科研、生产、营销和服务为一体的高新科技企业." required> -->
+                </div>
+                <div class="input-group">
+                    <label for="product">公司主要产品</label>
+                    <textarea
+                        class="multi-line-input"
+                        rows="3"
+                        id="product"
+                        name="product"
+                        placeholder="..科技股份有限公司是一家集科研、生产、营销和服务为一体的高新科技企业...."
+                        maxlength="500"
+                        oninput="this.style.height = 'auto';this.style.height = this.scrollHeight + 'px'"></textarea>
+                    <!-- <input type="text" id="product" name="product" placeholder="输入企业注册地址"
+                    required> -->
+                </div>
+                <div class="input-group">
+                    <label for="org">能源管理体系组织架构</label>
+                    <input
+                        type="file"
+                        id="org"
+                        name="org"
+                        accept=".pdf,.docx"
+                        placeholder="能源管理体系组织架构">
+                </div>
+                <div class="input-group">
+                    <label for="principles">能源方针</label>
+                    <!-- <input type="text" id="principles" name="principles"
+                    placeholder="节能守法、清洁生产，节能降耗、持续改进。"> -->
+                    <textarea
+                        id="principles"
+                        name="principles"
+                        class="multi-line-input"
+                        rows="3"
+                        placeholder="..科技股份有限公司是一家集科研、生产、营销和服务为一体的高新科技企业...."
+                        maxlength="500"
+                        oninput="this.style.height = 'auto';this.style.height = this.scrollHeight + 'px'"></textarea>
+                </div>
+                <button type="submit" class="form-button-big">下一步</button>
+            </form>
+        </div>
+
+        <script>
+            // Handle form submission
+            document
+                .getElementById("register-form")
+                .addEventListener("submit", async function (event) {
+                    // Retrieve the token from localStorage (or wherever it is stored after login)
+                    const token = localStorage.getItem("authToken");
+
+                    if (!token) {
+                        alert("You must be logged in to perform this action.");
+                        window.location.href = "/login"; // Redirect to login page
+                        return;
+                    }
+                    event.preventDefault(); // Prevent the default form submission
+
+                    // Collect form data
+                    const org = document
+                        .getElementById("org")
+                        .value;
+                    const principles = document
+                        .getElementById("principles")
+                        .value;
+                    const product = document
+                        .getElementById("product")
+                        .value;
+                    const general = document
+                        .getElementById("general")
+                        .value;
+
+                    // Send data as JSON
+                    const response = await fetch("/company", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify(
+                            {id: id, product: product, org: org, principles: principles, general: general}
+                        )
+                    });
+
+                    // Handle the response
+                    if (response.ok) {
+                        alert("登记成功");
+                        // window.location.href = "/audit";
+                    } else {
+                        const errorData = await response.json();
+                        alert("Error: " + (
+                            errorData.detail || "Unknown error occurred."
+                        ));
+                    }
+                });
+        </script>
+    </body>
+</html>

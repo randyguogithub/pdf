@@ -20,8 +20,6 @@
         function logout() {
             // Perform logout logic here
             alert('You have been logged out.');
-            // Redirect to login page or perform other actions
-            // document.cookie = "user_logged_in=False;";
 
             window.location.href = '/login';
         }
@@ -50,31 +48,62 @@
 
         <script>
             // Function to load a markdown file and render it
-            function loadMarkdown(id) {
-                const company = JSON.parse(`{{ company | tojson | safe }}`);
+            function loadMarkdown(company,colid) {
+                
                 const contentDiv = document.getElementById('markdown-content');
-                const htmlContent = marked.parse(company[id]);
+                const htmlContent = marked.parse(company[colid]);
 
                 // Create an input field to allow editing
                 contentDiv.innerHTML = `
-                    <textarea id="markdown-editor" style="width: 100%; height: 300px;">${company[id]}</textarea>
+                    <textarea id="markdown-editor" style="width: 100%; height: 500px;">${company[colid]}</textarea>
                     <button id="save-button">Save</button>
                 `;
 
                 // Add event listener to save button
                 document.getElementById('save-button').addEventListener('click', () => {
                     const updatedContent = document.getElementById('markdown-editor').value;
-                    company[id] = updatedContent; // Update the company data
+                    company[colid] = updatedContent; // Update the company data
                     contentDiv.innerHTML = marked.parse(updatedContent); // Render updated content
-                    alert('Content updated successfully!');
+                    event.preventDefault(); // Prevent the default form submission
+                    updateMarkdown(company,colid,updatedContent)
                 });
             }
-        
+            async function updateMarkdown(company,colid,updatedContent) {
+                // Send data as JSON
+                const token = localStorage.getItem("authToken");
+
+                if (!token) {
+                    alert("You must be logged in to perform this action.");
+                    window.location.href = "/login"; // Redirect to login page
+                    return;
+                }
+
+                const response = await fetch("/company", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        id: company['id'],
+                        [colid]: updatedContent // Use colid as the key dynamically
+                    }),
+                });
+
+                // Handle the response
+                if (response.ok) {
+                    alert("更新成功");
+                    // window.location.href = "/audit";
+                } else {
+                    const errorData = await response.json();
+                    alert("Error: " + (errorData.detail || "Unknown error occurred."));
+                }
+            }
             // Add event listeners to nav-links
             document.addEventListener('DOMContentLoaded', () => {
                 const navLinks = document.querySelectorAll('.nav-link');
                 // Remove the 'active' class from all links
-
+                const company = JSON.parse(`{{ company | tojson | safe }}`);
                 // navLinks.forEach(nav => nav.classList.remove('active'));
                 navLinks.forEach(link => {
                     link.addEventListener('click', event => {
@@ -82,12 +111,12 @@
                         const id = link.getAttribute('id'); // Get the href attribute
                         // Add the 'active' class to the clicked link
                         // link.classList.add('active');
-                        loadMarkdown(id); // Load the corresponding markdown file
+                        loadMarkdown(company,id); // Load the corresponding markdown file
                     });
                 });
         
                 // Load the default markdown file on page load
-                loadMarkdown('info');
+                loadMarkdown(company,'info');
             });
         </script>
 
