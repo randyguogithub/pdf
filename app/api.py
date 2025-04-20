@@ -28,7 +28,7 @@ async def add_company_api(
     company = Company(
         name=company_data.name,
         address=company_data.address,
-        created_by=user.email,
+        created_by=user.id,
     )
     session.add(company)
     await session.commit()
