@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>登录 - AISO智慧能效评估系统</title>
+    <link rel="icon" type="image/png" href="/static/logo.jpg">
     <link rel="stylesheet" href="/static/css/formstyle.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +39,7 @@
                 body: new URLSearchParams(formData), // Convert FormData to URLSearchParams
             });
 
-            console.log("response", response);
+            // console.log("response", response);
             // Handle the response
             if (response.ok) {
                 const data = await response.json(); // Parse the JSON response

@@ -6,3 +6,4 @@ python-multipart
 reportlab
 fastapi-users[sqlalchemy]
 aiosqlite
+python-jose[cryptography]

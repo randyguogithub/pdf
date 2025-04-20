@@ -16,9 +16,9 @@
 
         </div>
         <div class="container">
-            <!-- {% if companies %} -->
+            {% if companies %}
                 <!-- Display the company list if companies are found -->
-                <!-- <table border="1">
+                <table border="1">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -41,10 +41,10 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-                </table> -->
-            <!-- {% else %} -->
+                </table>
+            {% else %}
                 <!-- Show the form if no companies are found -->
-                <!-- <div>
+                <div>
                     <p>未找到公司信息，请先添加公司信息：</p>
                     <div>
                         <form action="/company" method="POST">
@@ -69,43 +69,46 @@
                             <button type="company" class="form-button">添加公司</button>
                         </form>
                     {% endif %}
-                </div> -->
+                </div>
                 <script>
+
                     // Run the script automatically when the page loads
-                    document.addEventListener("DOMContentLoaded", async function () {
-                        const token = localStorage.getItem("authToken");
         
-                        if (!token) {
-                            alert("You must be logged in to perform this action.");
-                            window.location.href = "/login"; // Redirect to login page
-                            return;
-                        }
+                    // document.addEventListener("DOMContentLoaded", async function () {
+                    //     const token = localStorage.getItem("authToken");
         
-                        // Send data as JSON
-                        const response = await fetch("/api/v1/mycompany", {
-                            method: "GET",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Authorization": `Bearer ${token}`
-                            },
-                            // body: JSON.stringify({name: name, address: address})
-                        });
+                    //     if (!token) {
+                    //         alert("You must be logged in to perform this action.");
+                    //         window.location.href = "/login"; // Redirect to login page
+                    //         return;
+                    //     }
         
-                        // Handle the response
-                        if (response.ok) {
-                            const responseData = await response.json();
-                            if (responseData.length === 0) {
-                                window.location.href = "/company/new?token=${token}";
-                            } else {
-                                window.location.href = `/company/list?token=${token}`;
-                            } 
-                        } else {
-                            const errorData = await response.json();
-                            alert("Error: " + (
-                                errorData.detail || "Unknown error occurred."
-                            ));
-                        }
-                    });
+                    //     // Send data as JSON
+                    //     const response = await fetch("/api/v1/mycompany", {
+                    //         method: "GET",
+                    //         headers: {
+                    //             "Content-Type": "application/json",
+                    //             "Authorization": `Bearer ${token}`
+                    //         },
+                    //         // body: JSON.stringify({name: name, address: address})
+                    //     });
+        
+                    //     // Handle the response
+                    //     if (response.ok) {
+                    //         const responseData = await response.json();
+                    //         if (responseData.length === 0) {
+                    //             window.location.href = "/company/new";
+                    //         } else {
+                    //             console.log(responseData);
+                    //         }
+                    //         // alert("登记成功"); window.location.href = "/audit";
+                    //     } else {
+                    //         const errorData = await response.json();
+                    //         alert("Error: " + (
+                    //             errorData.detail || "Unknown error occurred."
+                    //         ));
+                    //     }
+                    // });
                 </script>
             </body>
         </html>

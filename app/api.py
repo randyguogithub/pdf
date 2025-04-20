@@ -7,7 +7,10 @@ from app.users import current_active_user
 import uuid
 
 api_router = APIRouter()
-
+@api_router.get("/mycompany", tags=["company"])
+async def get_my_companies(request: Request,session: AsyncSession = Depends(get_async_session),user: User = Depends(current_active_user)):
+    result = await session.execute(select(Company).where(Company.created_by==user.email))
+    return result.scalars().all()
 @api_router.get("/company", tags=["company"])
 async def list_companies(session: AsyncSession = Depends(get_async_session)):
     result = await session.execute(select(Company))

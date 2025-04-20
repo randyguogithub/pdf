@@ -12,14 +12,11 @@ from pathlib import Path
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Not needed if you setup a migration system like Alembic
     await create_db_and_tables()
     yield
 
 
 app = FastAPI(lifespan=lifespan)
-# Include routes from pages.py
-# Get the current directory of the app.py file
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 app.mount("/static", StaticFiles(directory="{}/static".format(BASE_DIR)), name="static")
