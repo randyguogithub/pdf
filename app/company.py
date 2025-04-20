@@ -5,48 +5,29 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
 from app.db import get_async_session
 from app.db import User, Company, CompanyCreate, CompanyInfo
-from app.users import current_active_user,SECRET
+from app.users import current_active_user,decode_jwt_token
 import uuid
 from fastapi import Query, HTTPException
-from jose import jwt, JWTError
 
 templates = Jinja2Templates(directory="templates")
 company_router = APIRouter()
 # SECRET_KEY = "your_secret_key"  # Replace with your actual secret key
-ALGORITHM = "HS256"  # Replace with your actual algorithm
+# ALGORITHM = "HS256"  # Replace with your actual algorithm
 
 @company_router.get("/", response_class=HTMLResponse)
-async def list_mycompanies(request: Request, session: AsyncSession = Depends(get_async_session)):
-    return templates.TemplateResponse("company.html", {"request": request})
-@company_router.get("/new", response_class=HTMLResponse)
-async def new_mycompanies(request: Request, session: AsyncSession = Depends(get_async_session)):
-    return templates.TemplateResponse("new_company.html", {"request": request})
-
-
-@company_router.get("/list", response_class=HTMLResponse)
-async def new_mycompanies(
+async def list_mycompanies(
     request: Request, 
-    session: AsyncSession = Depends(get_async_session), 
+    session: AsyncSession = Depends(get_async_session),
     token: str = Query(..., alias="token")
-):
-    try:
-        # Decode and verify the token
-        payload = jwt.decode(token, SECRET, algorithms=[ALGORITHM])
-        print(payload)
-        username = payload.get("sub")
-        if not username:
-            raise HTTPException(status_code=401, detail="Invalid token")
-        
-        # Fetch companies created by the user
-        result = await session.execute(select(Company).where(Company.created_by == username))
-        companies = result.scalars().all()
-        
-        # Render the template with the companies
+    ):
+    user=decode_jwt_token(token)
+    result = await session.execute(select(Company).where(Company.created_by == user.get('sub')))
+    companies = result.scalars().all()
+    if len(companies) ==0:
+        return templates.TemplateResponse("new_company.html", {"request": request})
+    else:
         return templates.TemplateResponse("my_company.html", {"request": request, "companies": companies, "user": username})
-    
-    except JWTError:
-        # Token is invalid or expired
-        raise HTTPException(status_code=401, detail="Invalid token")
+
 @company_router.get("/edit/{company_id}", response_class=HTMLResponse)
 async def get_company(company_id: str,  # Add company_id as a parameter
     request: Request,

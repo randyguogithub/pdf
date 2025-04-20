@@ -9,7 +9,7 @@ from fastapi_users.authentication import (
     JWTStrategy,
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
-
+from jose import jwt, JWTError,ExpiredSignatureError
 from app.db import User, get_user_db
 
 SECRET = "SECRET"
@@ -40,9 +40,27 @@ async def get_user_manager(user_db: SQLAlchemyUserDatabase = Depends(get_user_db
 bearer_transport = BearerTransport(tokenUrl="api/v1/login")
 
 
-def get_jwt_strategy() -> JWTStrategy[models.UP, models.ID]:
-    return JWTStrategy(secret=SECRET, lifetime_seconds=36000)
+# def get_jwt_strategy() -> JWTStrategy[models.UP, models.ID]:
+#     return JWTStrategy(secret=SECRET, lifetime_seconds=36000,audience="aiso")
 
+def get_jwt_strategy() -> JWTStrategy:
+    return JWTStrategy(
+        secret=SECRET,
+        lifetime_seconds=36000,
+        token_audience="aiso"  # 👈 Correct parameter name
+    )
+    
+def decode_jwt_token(token: str):
+    try:
+        payload = jwt.decode(
+            token,
+            SECRET,
+            algorithms=["HS256"],
+            audience="aiso"  # 👈 Validate the audience claim
+        )
+        return payload
+    except JWTError as e:
+        raise HTTPException(401, detail=str(e))
 
 auth_backend = AuthenticationBackend(
     name="jwt",

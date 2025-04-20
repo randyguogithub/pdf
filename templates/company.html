@@ -95,7 +95,7 @@
                         if (response.ok) {
                             const responseData = await response.json();
                             if (responseData.length === 0) {
-                                window.location.href = "/company/new?token=${token}";
+                                window.location.href = `/company/new?token=${token}`;
                             } else {
                                 window.location.href = `/company/list?token=${token}`;
                             } 
