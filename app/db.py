@@ -5,68 +5,9 @@ from sqlalchemy import select
 from fastapi_users.password import PasswordHelper
 from app.schemas import Base, User
 import uuid
-
+from fastapi_users.db import SQLAlchemyUserDatabase
 
 DATABASE_URL = "sqlite+aiosqlite:///./data/aiso.db"
-
-# class CompanyCreate(BaseModel):
-#     name: Optional[str] = "name" 
-#     address: Optional[str] = "address"
-
-# class InfoCreate(BaseModel):
-#     id: str
-#     info: str | None = None
-#     scope: str | None = None
-#     status: str | None = None
-#     purpose: str | None = None
-#     general: str | None = None
-#     org: str | None = None
-#     principles: str | None = None
-#     product: str | None = None
-
-# class Base(DeclarativeBase):
-#     pass
-
-# class Company_info(Base): #公司概况
-#     __tablename__ = "company_info"
-#     id =Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-#     company_id = Column(UUID(as_uuid=True))
-#     scope = Column(String, default="能源评审的范围")
-#     org = Column(String, default="能源管理体系组织架构")
-#     period = Column(String, default="能源评审的统计期")
-#     team= Column(String, default="能源评审的统计期")
-#     responsiblity = Column(String, default="领导小组职责")
-#     rules = Column(String, default="评审的主要方法")
-#     law = Column(String, default="能源评审的依据")
-#     principles = Column(String, default="能源方针")
-#     product = Column(String, default="公司主要产品")
-#     purpose = Column(String, default="能源评审的目的")
-#     info = Column(String, default="公司主要概况")
-#     updated_by = Column(String, default="user")
-#     created_at = Column(DateTime, server_default=func.now())
-    
-# class Company(Base):
-#     __tablename__ = "company"
-#     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-#     name = Column(String)
-#     address = Column(String)
-#     created_by = Column(String, default="admin")
-#     auditor = Column(String, default="admin")
-#     status = Column(String, default="draft")
-#     created_at = Column(DateTime, server_default=func.now())
-#     pass
-
-# class User(SQLAlchemyBaseUserTableUUID, Base):
-#     __tablename__ = "user"
-#     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-#     name = Column(String)
-#     email = Column(String, unique=True, nullable=False)
-#     role = Column(String)
-#     is_active = Column(Boolean, default=True)
-#     is_superuser = Column(Boolean, default=False)
-#     is_verified = Column(Boolean, default=False)
-#     lastlogin = Column(DateTime, server_default=func.now())
-#     pass
 
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)

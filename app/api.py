@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Request,Query,HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.db import get_async_session
-from app.schemas import User, Company, CompanyCreate, InfoCreate
+from app.schemas import User, Company, CompanyCreate, InfoCreate,Company_info
 from app.users import current_active_user
 import uuid
 
@@ -43,13 +43,11 @@ async def update_company(
     user: User = Depends(current_active_user),
     company_id: str = Query(..., alias="companyid")
 ):
-    # print("Received company_id:", company_id)
     try:
         company_uuid = uuid.UUID(company_id)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid company ID format")
 
-    # Fetch the company from the database
     result = await session.execute(select(Company).where(Company.id == company_uuid))
     company = result.scalars().first()
 
@@ -73,23 +71,26 @@ async def delete_company_api(
     company = Company(
         name=company_data.name,
         address=company_data.address,
-        created_by=user.email,
+        created_by=str(user.id),
     )
     session.add(company)
     await session.commit()
     return {"company": company}
 
 @api_router.post("/company/info", tags=["company"])
-async def add_company_api(
-    info_data: CompanyCreate,
+async def add_company_info_api(
+    info_data: InfoCreate,
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_active_user)
 ):
-    company = Company_info(
-        name=company_data.name,
-        address=company_data.address,
-        created_by=str(user.id),
+    # print("info_data", info_data)
+    info = Company_info(
+        product=info_data.product,
+        info=info_data.info,
+        principles=info_data.principles,
+        org=info_data.org,
+        updated_by=str(user.id),
     )
-    session.add(company)
+    session.add(info)
     await session.commit()
-    return {"company": company}    
+    return {"info": info}    

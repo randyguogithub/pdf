@@ -12,19 +12,14 @@
             <h1>添加评估能源企业信息</h1>
             <form id="register-form">
                 <input type="hidden" id="companyid" name="companyid" value="{{ companyid }}">
-                <input
-                    type="hidden"
-                    id="id"
-                    name="id"
-                    value="550e8400-e29b-41d4-a716-446655440000">
-
+                
                 <div class="input-group">
                     <label for="general">公司主要概况</label>
                     <textarea
                         class="multi-line-input"
                         rows="3"
-                        id="general"
-                        name="general"
+                        id="info"
+                        name="info"
                         placeholder="..科技股份有限公司是一家集科研、生产、营销和服务为一体的高新科技企业...."
                         maxlength="500"
                         oninput="this.style.height = 'auto';this.style.height = this.scrollHeight + 'px'"></textarea>
@@ -95,19 +90,19 @@
                     const product = document
                         .getElementById("product")
                         .value;
-                    const general = document
-                        .getElementById("general")
+                    const info = document
+                        .getElementById("info")
                         .value;
 
                     // Send data as JSON
-                    const response = await fetch("/company/info", {
+                    const response = await fetch("/api/v1/company/info", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${token}`
                         },
                         body: JSON.stringify(
-                            {id: id, product: product, org: org, principles: principles, general: general}
+                            {product: product, org: org, principles: principles, info: info}
                         )
                     });
 

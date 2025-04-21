@@ -37,7 +37,7 @@ async def update_company(
         company_uuid = uuid.UUID(company_id)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid company ID format")
-    result = await session.execute(select(Company).where(Company.company_id == company_uuid))
+    result = await session.execute(select(Company).where(Company.id == company_uuid))
     company = result.scalars().first()
     if result is None:
         companys= {"message": "Company not found"}

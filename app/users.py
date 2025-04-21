@@ -1,6 +1,5 @@
 import uuid
 from typing import Optional
-
 from fastapi import Depends, Request,HTTPException
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin, models
 from fastapi_users.authentication import (
@@ -10,7 +9,7 @@ from fastapi_users.authentication import (
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
 from jose import jwt, JWTError,ExpiredSignatureError
-from app.db import  get_user_db
+from app.db import get_user_db
 from app.schemas import User
 
 SECRET = "SECRET"

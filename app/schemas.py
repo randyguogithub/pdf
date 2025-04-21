@@ -23,15 +23,18 @@ class CompanyCreate(BaseModel):
     address: Optional[str] = "address"
 
 class InfoCreate(BaseModel):
-    id: str
-    info: str | None = None
-    scope: str | None = None
-    status: str | None = None
-    purpose: str | None = None
-    general: str | None = None
-    org: str | None = None
-    principles: str | None = None
-    product: str | None = None
+    info: Optional[str] = "公司主要概况" 
+    scope: Optional[str] = "能源评审的范围" 
+    purpose: Optional[str] = "能源评审的目的" 
+    org: Optional[str] = "能源管理体系组织架构" 
+    principles: Optional[str] = "能源方针" 
+    product: Optional[str] = "公司主要产品" 
+    period : Optional[str] ="能源评审的统计期"
+    team: Optional[str] ="成立评审领导小组"
+    responsiblity : Optional[str] ="领导小组职责"
+    rules: Optional[str] ="评审的主要方法"
+    law : Optional[str] ="能源评审的依据"
+    created_by : Optional[str] ="user"
 
 class Base(DeclarativeBase):
     pass
@@ -43,7 +46,7 @@ class Company_info(Base): #公司概况
     scope = Column(String, default="能源评审的范围")
     org = Column(String, default="能源管理体系组织架构")
     period = Column(String, default="能源评审的统计期")
-    team= Column(String, default="能源评审的统计期")
+    team = Column(String, default="成立评审领导小组")
     responsiblity = Column(String, default="领导小组职责")
     rules = Column(String, default="评审的主要方法")
     law = Column(String, default="能源评审的依据")
