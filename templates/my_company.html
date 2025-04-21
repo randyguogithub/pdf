@@ -16,8 +16,6 @@
 
         </div>
         <div class="container">
-            {% if companies %}
-                <!-- Display the company list if companies are found -->
                 <table border="1">
                     <thead>
                         <tr>
@@ -30,85 +28,17 @@
                     <tbody>
                         {% for company in companies %}
                             <tr>
-                                <td>{{ company[0] }}</td>
-                                <td>{{ company[1] }}</td>
-                                <td>{{ company[2] }}</td>
+                                <td>{{ company.id }}</td>
+                                <td>{{ company.name }}</td>
+                                <td>{{ company.address }}</td>
                                 <td>
-                                    <a href="/audit&commanyid={{ company[0] }}">查看信息</a>
+                                    <a href="/company/info?companyid={{ company.id }}">添加公司详细信息</a>
                                     |
-                                    <a href="/download&commanyid={{ company[0] }}">查看报表</a>
+                                    <a href="/company/update?companyid={{ company.id }}">修改登记公司信息</a>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-            {% else %}
-                <!-- Show the form if no companies are found -->
-                <div>
-                    <p>未找到公司信息，请先添加公司信息：</p>
-                    <div>
-                        <form action="/company" method="POST">
-                            <div class="form-group">
-                                <label for="name">公司名称:</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    placeholder="请输入公司名称"
-                                    required="required">
-                            </div>
-                            <div class="form-group">
-                                <label for="address">公司地址:</label>
-                                <input
-                                    type="text"
-                                    id="address"
-                                    name="address"
-                                    placeholder="请输入公司地址"
-                                    required="required">
-                            </div>
-                            <button type="company" class="form-button">添加公司</button>
-                        </form>
-                    {% endif %}
-                </div>
-                <script>
-
-                    // Run the script automatically when the page loads
-        
-                    // document.addEventListener("DOMContentLoaded", async function () {
-                    //     const token = localStorage.getItem("authToken");
-        
-                    //     if (!token) {
-                    //         alert("You must be logged in to perform this action.");
-                    //         window.location.href = "/login"; // Redirect to login page
-                    //         return;
-                    //     }
-        
-                    //     // Send data as JSON
-                    //     const response = await fetch("/api/v1/mycompany", {
-                    //         method: "GET",
-                    //         headers: {
-                    //             "Content-Type": "application/json",
-                    //             "Authorization": `Bearer ${token}`
-                    //         },
-                    //         // body: JSON.stringify({name: name, address: address})
-                    //     });
-        
-                    //     // Handle the response
-                    //     if (response.ok) {
-                    //         const responseData = await response.json();
-                    //         if (responseData.length === 0) {
-                    //             window.location.href = "/company/new";
-                    //         } else {
-                    //             console.log(responseData);
-                    //         }
-                    //         // alert("登记成功"); window.location.href = "/audit";
-                    //     } else {
-                    //         const errorData = await response.json();
-                    //         alert("Error: " + (
-                    //             errorData.detail || "Unknown error occurred."
-                    //         ));
-                    //     }
-                    // });
-                </script>
             </body>
         </html>

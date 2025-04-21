@@ -1,7 +1,7 @@
 import uuid
 from typing import Optional
 
-from fastapi import Depends, Request
+from fastapi import Depends, Request,HTTPException
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin, models
 from fastapi_users.authentication import (
     AuthenticationBackend,
@@ -10,11 +10,12 @@ from fastapi_users.authentication import (
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
 from jose import jwt, JWTError,ExpiredSignatureError
-from app.db import User, get_user_db
+from app.db import  get_user_db
+from app.schemas import User
 
 SECRET = "SECRET"
-
-
+ALGORITHMS = ["HS256"]
+AUDIENCE= "aiso"
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
@@ -47,7 +48,7 @@ def get_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(
         secret=SECRET,
         lifetime_seconds=36000,
-        token_audience="aiso"  # 👈 Correct parameter name
+        token_audience="aiso"
     )
     
 def decode_jwt_token(token: str):
@@ -56,7 +57,7 @@ def decode_jwt_token(token: str):
             token,
             SECRET,
             algorithms=["HS256"],
-            audience="aiso"  # 👈 Validate the audience claim
+            audience="aiso"
         )
         return payload
     except JWTError as e:

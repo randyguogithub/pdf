@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>更新能源评估企业 - AISO智慧能效评估系统</title>
+    <title>AISO智慧能效评估系统</title>
     <link rel="icon" type="image/png" href="/static/logo.jpg">
     <link rel="stylesheet" href="/static/css/formstyle.css">
 </head>
 <body>
     <div class="form-container">
-        <h1>登记能源评估企业 - AISO智慧能效评估系统</h1>
+        <h1>登记能源评估企业</h1>
         <form id="register-form">
+            <input type="hidden" id="companyid" name="companyid" value="{{ company.id }}">
             <div class="form-group">
                 <label for="name">企业名称</label>
-                <input type="text" id="name" name="name" placeholder="输入企业名称" required>
+                <input type="text" id="name" name="name" placeholder="{{ company.name }}" required>
             </div>
             <div class="form-group">
                 <label for="email">企业地址</label>
-                <input type="text" id="address" name="address" placeholder="输入企业注册地址" required>
+                <input type="text" id="address" name="address" placeholder="{{ company.address }}" required>
             </div>
-            <!-- <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div> -->
             <button type="submit" class="form-button">更新</button>
         </form>
-        <!-- <div class="form-footer">
-            已经有了账号? <a href="/company">Login</a>
-        </div> -->
     </div>
 
     <script>
@@ -42,11 +36,12 @@
             event.preventDefault(); // Prevent the default form submission
 
             // Collect form data
+            const companyid = document.getElementById("companyid").value;
             const name = document.getElementById("name").value;
             const address = document.getElementById("address").value;
-
+            console.log("companyid:", companyid);
             // Send data as JSON
-            const response = await fetch("/company", {
+            const response = await fetch(`/api/v1/company?companyid=${companyid}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -61,7 +56,7 @@
             // Handle the response
             if (response.ok) {
                 alert("更新成功");
-                window.location.href = "/audit";
+                window.location.href = `/company?token=${token}`;
             } else {
                 const errorData = await response.json();
                 alert("Error: " + (errorData.detail || "Unknown error occurred."));

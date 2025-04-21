@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
 from app.db import get_async_session
-from app.db import User
+from app.schemas import User
 
 templates = Jinja2Templates(directory="templates")
 admin_router = APIRouter()
