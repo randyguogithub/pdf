@@ -5,7 +5,12 @@ steps:
     args:
       - "-c"
       - |
-        gcloud compute ssh energy-audit-system --zone=asia-east2-c --project=randyguo-test-43165062 --command "sudo su && cd /home/randyzwguo/pdf && git pull && rm -rf data/aiso.db && systemctl restart energy  && systemctl status energy"
+        gcloud compute ssh energy-audit-system \
+        --zone=asia-east2-c --project=randyguo-test-43165062 \
+        --command "sudo su && cd /home/randyzwguo/pdf && git pull \
+        && rm -rf data/aiso.db && source venv/bin/activate \
+        && pip install -r requirements.txt \
+        && systemctl restart energy  && systemctl status energy"
 
 timeout: "1200s"  # Set a timeout for the build process (20 minutes)
 options:
