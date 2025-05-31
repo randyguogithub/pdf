@@ -9,7 +9,7 @@ from app.schemas import User
 templates = Jinja2Templates(directory="templates")
 admin_router = APIRouter()
 
-@admin_router.get("/user", response_class=HTMLResponse)
+@admin_router.get("/users", response_class=HTMLResponse)
 async def admin_page(request: Request, session: AsyncSession = Depends(get_async_session)):
     # Fetch all users from the database
     result = await session.execute(select(User))
@@ -17,8 +17,7 @@ async def admin_page(request: Request, session: AsyncSession = Depends(get_async
     print("users:", users)
     return templates.TemplateResponse("admin_user.html", {"request": request, "users": users})
 
-
-@admin_router.get("/ompany", response_class=HTMLResponse)
+@admin_router.get("/companies", response_class=HTMLResponse)
 async def admin_page(request: Request, session: AsyncSession = Depends(get_async_session)):
     # Fetch all users from the database
     result = await session.execute(select(Company))

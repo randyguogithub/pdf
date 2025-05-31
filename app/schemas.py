@@ -26,6 +26,7 @@ class InfoCreate(BaseModel):
     info: Optional[str] = "公司主要概况" 
     scope: Optional[str] = "能源评审的范围" 
     purpose: Optional[str] = "能源评审的目的" 
+    range: Optional[str] = "能源评审的边界"
     org: Optional[str] = "能源管理体系组织架构" 
     principles: Optional[str] = "能源方针" 
     product: Optional[str] = "公司主要产品" 
@@ -44,6 +45,7 @@ class Company_info(Base): #公司概况
     id =Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     company_id = Column(UUID(as_uuid=True))
     scope = Column(String, default="能源评审的范围")
+    range = Column(String, default="能源评审的边界")
     org = Column(String, default="能源管理体系组织架构")
     period = Column(String, default="能源评审的统计期")
     team = Column(String, default="成立评审领导小组")

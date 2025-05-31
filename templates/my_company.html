@@ -7,13 +7,8 @@
         <link rel="stylesheet" href="/static/css/styles.css">
     </head>
     <body>
-        <!-- <h1>Company List</h1> -->
         <div class="header">
-            <!-- <img src="/static/logo.jpg" alt="Company Logo" style="height: 50px;
-            vertical-align: middle; margin-right: 10px;"> -->
-            <!-- <h1> page.main_title </h1> -->
             <h1>公司列表</h1>
-
         </div>
         <div class="container">
                 <table border="1">
@@ -33,6 +28,8 @@
                                 <td>{{ company.address }}</td>
                                 <td>
                                     <a href="/company/info?companyid={{ company.id }}">添加公司详细信息</a>
+                                    |
+                                    <a href="/company/detail?companyid={{ company.id }}">查看公司详细信息</a>
                                     |
                                     <a href="/company/update?companyid={{ company.id }}">修改登记公司信息</a>
                                 </td>

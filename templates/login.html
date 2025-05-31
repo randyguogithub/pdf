@@ -39,14 +39,10 @@
                 body: new URLSearchParams(formData), // Convert FormData to URLSearchParams
             });
 
-            // console.log("response", response);
-            // Handle the response
             if (response.ok) {
                 const data = await response.json(); // Parse the JSON response
                 const token = data.access_token; // Extract the access token
-                console.log("token ", token)
                 localStorage.setItem("authToken", token); // Store the token in localStorage
-                // alert("登录成功!");
                 window.location.href = `/company?token=${token}`;
             } else {
                 const errorData = await response.json();

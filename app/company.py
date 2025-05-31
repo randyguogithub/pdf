@@ -41,13 +41,13 @@ async def update_company(
     company = result.scalars().first()
     if result is None:
         companys= {"message": "Company not found"}
-
-    company_dict = {
+    print(company)
+    company_info = {
         "id": company.id,
         "name": company.name,
         "address": company.address
     }     
-    return templates.TemplateResponse("update_company.html", {"request": request,"company": company_dict})
+    return templates.TemplateResponse("update_company.html", {"request": request,"company": company_info})
 
 @company_router.get("/info",response_class=HTMLResponse)
 async def add_info_form(
@@ -72,4 +72,25 @@ async def add_info_form(
     }     
     return templates.TemplateResponse("update_info.html", {"request": request,"company": company_dict})
 
+@company_router.get("/detail",response_class=HTMLResponse)
+async def detail_company(
+    request: Request,
+    session: AsyncSession = Depends(get_async_session),
+    company_id: str = Query(..., alias="companyid")
+    ):
+    try:
+        company_uuid = uuid.UUID(company_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid company ID format")
+    result = await session.execute(select(Company_info).where(Company_info.company_id == company_uuid))
+    info = result.scalars().first()
+
+    # company_dict = {
+    #     "id": info.id,
+    #     "product": info.product,
+    #     "scope": info.scope
+    # }
+    company_info = []
+    company_info.append("#1. 能源评审的目的、范围及边界、统计期\n ##1.1 能源评审的目的 \n {info.purpose}\n ##1.4 能源评审的范围 \n {info.scope}\n  ##1.5 能源评审的统计期 \n {info.period}\n")
+    return templates.TemplateResponse("detail_company.html", {"request": request,"company": company_info})
 
