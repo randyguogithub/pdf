@@ -79,7 +79,9 @@
                         return;
                     }
                     event.preventDefault(); // Prevent the default form submission
-
+                    const company_id = document
+                        .getElementById("companyid")
+                        .value;
                     // Collect form data
                     const org = document
                         .getElementById("org")
@@ -102,9 +104,12 @@
                             "Authorization": `Bearer ${token}`
                         },
                         body: JSON.stringify(
-                            {product: product, org: org, principles: principles, info: info}
+                            {company_id:company_id,product: product, org: org, principles: principles, info: info}
                         )
                     });
+                    console.log( JSON.stringify(
+                            {company_id:company_id,product: product, org: org, principles: principles, info: info}
+                        ));
 
                     // Handle the response
                     if (response.ok) {

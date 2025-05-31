@@ -23,6 +23,7 @@ class CompanyCreate(BaseModel):
     address: Optional[str] = "address"
 
 class InfoCreate(BaseModel):
+    company_id: Optional[uuid.UUID] = None
     info: Optional[str] = "公司主要概况" 
     scope: Optional[str] = "能源评审的范围" 
     purpose: Optional[str] = "能源评审的目的" 

@@ -83,8 +83,9 @@ async def add_company_info_api(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_active_user)
 ):
-    # print("info_data", info_data)
+    print(info_data)
     info = Company_info(
+        company_id=info_data.company_id,
         product=info_data.product,
         info=info_data.info,
         principles=info_data.principles,
